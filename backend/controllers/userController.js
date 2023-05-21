@@ -1,12 +1,11 @@
 import asyncHandler from "express-async-handler";
+import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
 
 // @desc Auth user/set token
 // route POST /api/users/auth
 // @access Public
-const authUser = asyncHandler(async (req, res) => {
-	res.status(200).json({ message: "Auth User" });
-});
+const authUser = asyncHandler(async (req, res) => {});
 
 // @desc Register new user
 // route POST /api/users
@@ -28,6 +27,7 @@ const registerUser = asyncHandler(async (req, res) => {
 	});
 
 	if (user) {
+		generateToken(res, user._id);
 		res.status(201).json({
 			_id: user._id,
 			name: user.name,
